@@ -1,18 +1,23 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<String> arrayList =new ArrayList<>(List.of("an", "band", "band", "abandon"));
-        ArrayList<String> arrayList2 =new ArrayList<>(List.of("to", "too", "stool", "tools"));
-        ArrayList<String> arrayList3 =new ArrayList<>(List.of("catch", "bobcat", "catchacat", "cat", "at"));
-        WordChecker wordChecker = new WordChecker(arrayList);
-        WordChecker wordChecker2 = new WordChecker(arrayList2);
-        WordChecker wordChecker3 = new WordChecker(arrayList3);
-        System.out.println(wordChecker.isWordChain());
-        System.out.println(wordChecker2.isWordChain());
-        System.out.println(wordChecker3.createList("cat"));
-        System.out.println(wordChecker3.createList("catch"));
-        System.out.println(wordChecker3.createList("dog"));
+        File file = new File("src/WordChecker.txt");
+        Scanner scanner = null;
+        int count = 0;
+        try {
+            scanner = new Scanner(file);
+        }catch (FileNotFoundException ignored){
+            System.err.println("wrong file");
+        }
+        do {
+            assert scanner != null;
+            String[] strings = scanner.nextLine().split(" ");
+            count += new WordChecker(new ArrayList<>(List.of(strings))).isWordChain()?1:0;
+
+        } while (scanner.hasNextLine());
+        System.out.println(count);
     }
 }
